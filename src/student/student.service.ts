@@ -32,4 +32,25 @@ export class StudentService {
             }
         })
     }
+
+    async getManyStudents(studentIds: string[]): Promise<Student[]> {
+        // return this.studentRepository.find({
+        //     where: {
+        //         id: {
+        //             $in: studentIds
+        //         }
+        //     }
+        // });
+
+        // I know this method isn't good for the performance, but the method in the above didn't work :(
+        let students = [];
+        for (let i = 0; i < studentIds.length; i++) {
+            students.push(this.studentRepository.findOne({
+                where: {
+                    id: studentIds[i]
+                }
+            }))
+        }
+        return students;
+    }
 }
